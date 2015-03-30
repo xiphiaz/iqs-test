@@ -1,5 +1,6 @@
 angular.module('app.public.weightloss', [])
 
+
     .config(function(stateHelperServiceProvider) {
         stateHelperServiceProvider.addState('app.public.weightloss', {
             url: '/weightloss',
@@ -10,6 +11,12 @@ angular.module('app.public.weightloss', [])
                 }
             },
             resolve: /*@ngInject*/{
+                currentGoal: function(userService){
+                    return userService.getGoal();
+                },
+                allLogs: function(userService){
+                    return userService.getLogs()
+                }
             },
             data: {
                 title: "Home",
@@ -18,8 +25,10 @@ angular.module('app.public.weightloss', [])
         });
     })
 
-    .controller('app.public.weightloss.controller', function($scope) {
+    .controller('app.public.weightloss.controller', function($scope, currentGoal, allLogs) {
 
+        $scope.currentGoal = currentGoal;
+        $scope.allLogs = allLogs;
 
     })
 
