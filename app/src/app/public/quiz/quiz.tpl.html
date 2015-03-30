@@ -5,19 +5,30 @@
 
     <div class="row panel panel-default">
         <div class="panel-heading">
-            1. Take a look at https://iquitsugar.com - what would you do to improve the delivery to users (front end only). Some bullet points are fine, please include what tools or programs you used to help with your suggestions
+            1. Take a look at <a href="https://iquitsugar.com" target="_blank">https://iquitsugar.com</a> - what would you do to improve the delivery to users (front end only). Some bullet points are fine, please include what tools or programs you used to help with your suggestions
         </div>
         <div class="panel-body">
-            <p>(answer)</p>
+            <p>Checking with Chrome dev tools:</p>
+            <ul>
+                <li>Image delivery is very good - images are 304 on refresh, sizes are small</li>
+                <li>Reduction in javascript files (concatenation) may help performance, but this may be hard as about half are initiated by third parties</li>
+                <li>On search of recipes, the result sets appears below the fold (iPhone 6 emulator), making it hard to tell recipes loaded</li>
+                <li>On mobile, clicking the login icon brings up the login sidepane, but there is no register link.</li>
+                <li>There appears to be a mixture of sources coming via http or https, this is giving a warning on certificates</li>
+                <li>404 on the banner link (Chocolate cookbook)</li>
+                <li>Some images are oddly cropped when at certain screen sizes (mobile)</li>
+            </ul>
         </div>
     </div>
 
     <div class="row panel panel-default">
         <div class="panel-heading">
-            2. In our current development environment using Wordpress, we have no automated testing scripts or process. We also have no servers or infrastructure in the office. We’d like to start implementing tests as we add new features & functions - explain what your recommendations would be so this could occur, incuding what technologies, platforms or services you might suggest (note: we already use JIRA & Confluence Cloud).
+            2. In our current development environment using Wordpress, we have no automated testing scripts or process. We also have no servers or infrastructure in the office. We’d like to start implementing tests as we add new features & functions - explain what your recommendations would be so this could occur, including what technologies, platforms or services you might suggest (note: we already use JIRA & Confluence Cloud).
         </div>
         <div class="panel-body">
-            <p>(answer)</p>
+            <p>I highly recommend TravisCI as a build tool, I have previously worked with Atlassian Bamboo, and haven't been pleased with the results. TravisCI is highly configurable, and integrates nicely with Github</p>
+            <p>For deployment I recommend staying with Git deployment, but using mirror hooks (supported by Stash) or webhooks (supported by Github and Bitbucket)</p>
+            <p>With repo mirroring it is easy to create a bare hub repo on a vps with a post-update hook to auto deploy and build applications</p>
         </div>
     </div>
 
@@ -26,7 +37,14 @@
             3. What is <em>method chaining</em>? Show an example class that implements it and explain why you would use it
         </div>
         <div class="panel-body">
-            <p>(answer)</p>
+            <p>Method chaining is when you return the instance of the methods class. Depending on implementation it could return the same instance, or a new instance.</p>
+            <p>I've used both methods, as the latter can be very useful for angular services for one-time configuration that doesn't mutate the service singleton.</p>
+            <p>Example:</p>
+            <code>
+                apiService.skipInterceptor().get('/path/to/resource');
+            </code>
+            <p>In this example the skipInterceptor() method returns a new apiService that when called configures the http request to skip the interceptor.</p>
+            <p>This method is useful as it is uncommon to want to skip the interceptor, so subsequent (non chained) calls to apiService will be as normal</p>
         </div>
     </div>
 
@@ -35,7 +53,8 @@
             4. What is <em>autoloading</em> and why would you use it? Show a small example of how a project might implement it
         </div>
         <div class="panel-body">
-            <p>(answer)</p>
+            <p>Autoloading is commonly used in PHP to load classes without having to manually include or require them. This project actually uses autoloading for loading all the classes in the API</p>
+            <p>Composer is often used to handle autoloading for PHP</p>
         </div>
     </div>
 
@@ -44,12 +63,34 @@
             5. What are <em>Exceptions</em>? Why would you use them? Show an example (possibly from previous code you have written) where you have implemented their use
         </div>
         <div class="panel-body">
-            <p>(answer)</p>
+            <p>Exceptions are a form of logic flow, where a thrown exception will bubble up the call stack until it is caught, either by the application, the framework, or uncommonly the runtime.</p>
+            <p>Exceptions are simply used to abort program execution when it encounters an exceptional case</p>
+            <p>My preferred pattern of using exceptions is with APIs, and throwing RESTful exceptions from anywhere that could possibly be caught by the controller if needed.</p>
+            <p>An example:</p>
+                <pre>
+                    <code>
+    [...]
+
+    try {
+        $token = JWT::decode($rawToken, $this->secret);
+    }catch(Exception $e){
+        throw new UnauthorizedException("JWT Error: ".$e->getMessage());
+    }
+
+    if ($token->nbf < time()){
+        throw new UnauthorizedException("JWT Token has expired");
+    }
+
+    [...]
+                    </code>
+                </pre>
+
         </div>
     </div>
 
     <div class="row panel panel-default">
         <div class="panel-heading">
+
             6. Write a code fragment that accepts some user input (either $_GET or $_POST) and stores it in a database table. Fields should include:
             <ul>
                 <li>headline - could be up to 100 characters</li>
@@ -60,7 +101,47 @@
 
         </div>
         <div class="panel-body">
-            <p>(answer)</p>
+            <p>Using Laravel 4.2:</p>
+            <pre>
+                <code>
+/**
+* @return \Dingo\Api\Http\ResponseBuilder
+* @throws ValidationException
+*/
+public function saveUserSummary()
+{
+
+    $dt = new Carbon\Carbon();
+    $before = $dt->subYears(20)->format('Y-m-d');
+
+    $rules = array(
+        'headline' => 'required|max:100',
+        'bodytext' => 'required',
+        'dob' => 'required|date|before:' . $before,
+    );
+
+    $validator = Validator::make(Input::all(), $rules);
+
+    if ($validator->fails()) {
+
+        $messages = $validator->messages();
+
+        throw new ValidationException($messages);
+
+    }
+
+    $userSummary = new UserSummary;
+    $userSummary->headline = Input::get('name');
+    $userSummary->bodytext = Input::get('email');
+    $userSummary->dob = Carbon::createFromFormat('d/m/Y', Input::get('dob'))->format('Y-m-d');
+
+    $userSummary->save();
+
+    return $this->response->noContent();
+
+}
+                </code>
+            </pre>
         </div>
     </div>
 
@@ -75,7 +156,23 @@
 
         </div>
         <div class="panel-body">
-            <p>(answer)</p>
+            <p>Concurrency is typically a server setup concern; a few options would be</p>
+            <ul>
+                <li>Correct webserver configuration - likely nginx</li>
+                <li>Use an API to minimise request/response sizes</li>
+                <li>Minimise the overhead for the runtime - consider avoiding using a framework for some endpoints</li>
+                <li>Cache all possible items to reduce application load</li>
+            </ul>
+            <p>To allow for the system to handle a high load of transactions, the following would be required</p>
+            <ul>
+                <li>Queuing of transactions with a service like pheanstalk or redis </li>
+                <li>Strong encryption of credit card details, as now the sensitive data is persisted on disk, opening an attack vector</li>
+                <li>Deferred notification of error events to the user, eg an email</li>
+            </ul>
+            <p>An assumption of the above is that there must be downtime in load for the queue to catch up, otherwise another credit card vendor would need to be found!</p>
+            <p>The above strategy could be tested by creating a mock service that simulates the credit card service, or by using the test service provided by the vendor (most banks provide this)</p>
+            <p>Simulating high concurrency can either be done locally with a tool like ApacheBench, which will test the queuing, or if full testing of the whole stack is needed tools like loader.io are effective at load testing an API</p>
+
         </div>
     </div>
 

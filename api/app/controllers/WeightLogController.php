@@ -62,4 +62,41 @@ class WeightLogController extends RestController
 
     }
 
+    /**
+     * @return \Dingo\Api\Http\ResponseBuilder
+     * @throws ValidationException
+     */
+    public function saveUserSummary()
+    {
+
+        $dt = new Carbon\Carbon();
+        $before = $dt->subYears(20)->format('Y-m-d');
+
+        $rules = array(
+            'headline' => 'required|max:100',
+            'bodytext' => 'required',
+            'dob' => 'required|date|before:' . $before,
+        );
+
+        $validator = Validator::make(Input::all(), $rules);
+
+        if ($validator->fails()) {
+
+            $messages = $validator->messages();
+
+            throw new ValidationException($messages);
+
+        }
+
+        $userSummary = new UserSummary;
+        $userSummary->headline = Input::get('name');
+        $userSummary->bodytext = Input::get('email');
+        $userSummary->dob = Carbon::createFromFormat('d/m/Y', Input::get('dob'))->format('Y-m-d');
+
+        $userSummary->save();
+
+        return $this->response->noContent();
+
+    }
+
 }
