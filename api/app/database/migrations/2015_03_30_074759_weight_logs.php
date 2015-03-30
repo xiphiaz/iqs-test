@@ -23,6 +23,8 @@ class WeightLogs extends Migration {
 
                 $table->float('weight');
 
+                $table->date('date');
+
                 $table->dateTime('created_at');
                 $table->dateTime('updated_at');
 
