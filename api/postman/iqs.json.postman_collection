@@ -5,8 +5,24 @@
 	"order": [],
 	"folders": [
 		{
+			"id": "e26a5441-3838-8f3e-901b-7502fa81099e",
+			"name": "0_Users",
+			"description": "",
+			"write": true,
+			"order": [
+				"8fc0554f-697e-df9c-da0d-7d1a19292809",
+				"a9d81b80-ffba-c57c-09a2-a5f13634afff"
+			],
+			"collection_name": "iqs",
+			"collection_owner": "15020",
+			"collection_id": "c811d3f3-bb74-7e27-1254-facdd72074bf",
+			"collection": "c811d3f3-bb74-7e27-1254-facdd72074bf",
+			"owner": "15020",
+			"collectionId": "c811d3f3-bb74-7e27-1254-facdd72074bf"
+		},
+		{
 			"id": "9acf2197-e379-dd3b-6fee-692150f9fdea",
-			"name": "Users goals",
+			"name": "1_Users goals",
 			"description": "",
 			"write": true,
 			"order": [
@@ -21,7 +37,7 @@
 		},
 		{
 			"id": "003041b3-2cf7-ee35-e524-8f00b10af5a3",
-			"name": "Users logs copy",
+			"name": "2_Users logs",
 			"description": "",
 			"write": true,
 			"order": [
@@ -34,21 +50,6 @@
 			"collection": "c811d3f3-bb74-7e27-1254-facdd72074bf",
 			"owner": "15020",
 			"collectionId": "c811d3f3-bb74-7e27-1254-facdd72074bf"
-		},
-		{
-			"id": "e26a5441-3838-8f3e-901b-7502fa81099e",
-			"name": "Users",
-			"description": "",
-			"write": true,
-			"order": [
-				"8fc0554f-697e-df9c-da0d-7d1a19292809",
-				"a9d81b80-ffba-c57c-09a2-a5f13634afff"
-			],
-			"collection_name": "iqs",
-			"collection_owner": "15020",
-			"collection_id": "c811d3f3-bb74-7e27-1254-facdd72074bf",
-			"collection": "c811d3f3-bb74-7e27-1254-facdd72074bf",
-			"owner": "15020"
 		}
 	],
 	"timestamp": 1427704367684,
