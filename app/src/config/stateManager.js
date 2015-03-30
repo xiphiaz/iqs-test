@@ -60,6 +60,21 @@ angular.module('stateManager', [
                 title : 'Home',
                 state : 'app.public.home',
                 icon: 'home'
+            },
+            {
+                title : 'Quiz',
+                state : 'app.public.quiz',
+                icon: 'question'
+            },
+            {
+                title : 'Weight Loss App',
+                state : 'app.public.weightloss',
+                icon: 'street-view'
+            },
+            {
+                title : 'Page Cut',
+                state : 'app.public.cut',
+                icon: 'file-code-o'
             }
         ];
 
