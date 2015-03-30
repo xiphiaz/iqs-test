@@ -2,7 +2,7 @@
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class BaseModel extends \Eloquent
+class BaseModel extends Eloquent
 {
 
     /**

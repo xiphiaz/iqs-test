@@ -19,4 +19,11 @@ class WeightLog extends BaseModel implements UserInterface {
 	 */
 	protected $table = 'weight_logs';
 
+    protected $fillable = [
+        'weight_log_id',
+        'user_id',
+        'weight',
+        'date'
+    ];
+
 }

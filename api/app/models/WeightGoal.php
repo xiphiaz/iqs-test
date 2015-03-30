@@ -23,4 +23,9 @@ class WeightGoal extends BaseModel implements UserInterface {
         return $this->belongsTo('User');
     }
 
+    protected $fillable = [
+        'weight_goal_id',
+        'weight_goal',
+    ];
+
 }

@@ -24,7 +24,10 @@ Route::api('v1', function () {
         Route::get('/{id}/goal', 'WeightGoalController@getGoal');
         Route::put('/{id}/goal', 'WeightGoalController@saveGoal');
 
-
+        Route::get('/{id}/logs', 'WeightLogController@getAllLogs');
+        Route::get('/{id}/logs/{date}', 'WeightLogController@getOneLog');
+        Route::put('/{id}/logs/{date}', 'WeightLogController@saveLog');
+        Route::delete('/{id}/logs/{date}', 'WeightLogController@removeLog');
 
 
     });

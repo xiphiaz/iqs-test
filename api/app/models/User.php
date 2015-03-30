@@ -30,4 +30,8 @@ class User extends BaseModel implements UserInterface {
         return $this->hasOne('WeightGoal');
     }
 
+    public function weightLogs() {
+        return $this->hasMany('WeightLog');
+    }
+
 }
