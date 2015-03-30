@@ -11,11 +11,6 @@
 |
 */
 
-//Route::get('/', function()
-//{
-//	return View::make('hello');
-//});
-
 
 Route::api('v1', function () {
 
@@ -24,6 +19,17 @@ Route::api('v1', function () {
         Route::get('/', 'UserController@getAll');
         Route::get('/{id}', 'UserController@getOne');
 
+
+        //Goal
+        Route::get('/{id}/goal', 'WeightGoalController@getGoal');
+        Route::put('/{id}/goal', 'WeightGoalController@saveGoal');
+
+
+
+
     });
+
+
+
 
 });
