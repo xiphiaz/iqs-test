@@ -11,6 +11,9 @@ angular.module('app.public.weightloss', [])
                 }
             },
             resolve: /*@ngInject*/{
+                user: function(userService){
+                    return userService.getUser();
+                },
                 currentGoal: function(userService){
                     return userService.getGoal();
                 },
@@ -25,8 +28,9 @@ angular.module('app.public.weightloss', [])
         });
     })
 
-    .controller('app.public.weightloss.controller', function($scope, currentGoal, allLogs) {
+    .controller('app.public.weightloss.controller', function($scope, currentGoal, allLogs, user) {
 
+        $scope.user = user;
         $scope.currentGoal = currentGoal;
         $scope.allLogs = allLogs;
 

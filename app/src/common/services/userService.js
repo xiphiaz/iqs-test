@@ -25,6 +25,14 @@ angular.module('userService', [])
 
             },
 
+            getUser: function(){
+                return apiService.get('/users/'+this._userId).then(function(res){
+                    return res.data.data; //@todo unwrap response in api
+                }).catch(function(err){
+                    console.error(err);
+                });
+            },
+
             getGoal: function(){
                 return apiService.get('/users/'+this._userId+'/goal').then(function(res){
                     return res.data.data; //@todo unwrap response in api
@@ -49,6 +57,10 @@ angular.module('userService', [])
 
                 getAllUsers: function(){
                     return privateMethods.getAllUsers();
+                },
+
+                getUser: function(){
+                    return privateMethods.setUser().getUser();
                 },
 
                 getGoal: function(){
