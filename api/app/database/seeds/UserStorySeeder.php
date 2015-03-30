@@ -78,6 +78,28 @@ class UserStorySeeder extends Seeder {
 
     }
 
+    private function createUserWeightData($userId = false){
+
+        if (!$userId){
+            $userId = $this->createUser();
+        }
+
+        $goal = $this->addUserGoal($userId);
+
+        $date = Carbon::now();
+
+        foreach(range(0, 90) as $day){ //3 months worth of data
+
+            $date->subDay(1);
+
+            if ($this->faker->boolean(20)){ //20% of the time log every day
+                $this->addUserLog($userId, clone $date, $goal);
+            }
+
+        }
+
+    }
+
 	/**
 	 * Run the database seeds.
 	 *
@@ -86,26 +108,12 @@ class UserStorySeeder extends Seeder {
 	public function run()
 	{
 
-        $this->createUser('john.smith@example.com');
+        $userId = $this->createUser('john.smith@example.com', 1);
+        $this->createUserWeightData($userId); //seed the base user
 
         foreach(range(0, 9) as $index){
 
-            $userId = $this->createUser();
-
-            $goal = $this->addUserGoal($userId);
-
-            $date = Carbon::now();
-
-            foreach(range(0, 90) as $day){ //3 months worth of data
-
-                $date->subDay(1);
-
-                if ($this->faker->boolean(20)){ //20% of the time log every day
-                    $this->addUserLog($userId, clone $date, $goal);
-                }
-
-            }
-
+            $this->createUserWeightData();
 
         }
 
