@@ -2,7 +2,7 @@ angular.module('app.public.weightloss', [])
 
     .config(function(stateHelperServiceProvider) {
         stateHelperServiceProvider.addState('app.public.weightloss', {
-            url: '/',
+            url: '/weightloss',
             views: {
                 "main@app.public": { // Points to the ui-view="main" in modal-layout.tpl.html
                     controller: 'app.public.weightloss.controller',

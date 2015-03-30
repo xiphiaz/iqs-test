@@ -2,7 +2,7 @@ angular.module('app.public.cut', [])
 
     .config(function(stateHelperServiceProvider) {
         stateHelperServiceProvider.addState('app.public.cut', {
-            url: '/',
+            url: '/cut',
             views: {
                 "main@app.public": { // Points to the ui-view="main" in modal-layout.tpl.html
                     controller: 'app.public.cut.controller',

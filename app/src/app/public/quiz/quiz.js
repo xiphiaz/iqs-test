@@ -2,7 +2,7 @@ angular.module('app.public.quiz', [])
 
     .config(function(stateHelperServiceProvider) {
         stateHelperServiceProvider.addState('app.public.quiz', {
-            url: '/',
+            url: '/quiz',
             views: {
                 "main@app.public": { // Points to the ui-view="main" in modal-layout.tpl.html
                     controller: 'app.public.quiz.controller',
