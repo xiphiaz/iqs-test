@@ -26,4 +26,8 @@ class User extends BaseModel implements UserInterface {
 	 */
 	protected $hidden = array('password');
 
+    public function weightGoal() {
+        return $this->hasOne('WeightGoal');
+    }
+
 }

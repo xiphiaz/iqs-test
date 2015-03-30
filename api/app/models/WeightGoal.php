@@ -19,4 +19,8 @@ class WeightGoal extends BaseModel implements UserInterface {
 	 */
 	protected $table = 'weight_goals';
 
+    public function user(){
+        return $this->belongsTo('User');
+    }
+
 }
