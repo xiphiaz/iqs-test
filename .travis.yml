@@ -6,7 +6,7 @@ services:
   - mysql
 
 before_script:
-  - mysql -e 'create database larvae;'
+  - mysql -e 'create database iqs;'
   - npm install --quiet -g gulp bower newman
   - npm install
   - bower install

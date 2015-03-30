@@ -23,7 +23,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'larvae',
+			'database'  => 'iqs',
 			'username'  => 'travis',
 			'password'  => '',
 			'charset'   => 'utf8',
