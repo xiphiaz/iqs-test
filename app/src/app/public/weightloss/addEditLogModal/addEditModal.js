@@ -18,6 +18,14 @@ angular.module('app.public.weightloss.addEditLogModal', [])
 
         };
 
+        $scope.opened = false;
+        $scope.openDate = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            $scope.opened = true;
+        };
+
 
     })
 

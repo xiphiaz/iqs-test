@@ -30,7 +30,7 @@ angular.module('app.public.weightloss', [
         });
     })
 
-    .controller('app.public.weightloss.controller', function($scope, currentGoal, allLogs, user, $modal) {
+    .controller('app.public.weightloss.controller', function($scope, currentGoal, allLogs, user, $modal, $filter) {
 
         $scope.user = user;
         $scope.currentGoal = currentGoal;
@@ -97,7 +97,10 @@ angular.module('app.public.weightloss', [
                         return 'add';
                     },
                     log: function(){
-                        return {}; //new log
+                        return {
+                            weight: _.first($scope.allLogs).weight,
+                            date: $filter('date')(new Date(), 'mediumDate')
+                        }; //new log
                     }
                 }
 
