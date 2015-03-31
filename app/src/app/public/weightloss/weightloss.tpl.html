@@ -24,6 +24,7 @@
 
             <p>
                 <input type="number" ng-model="currentGoal.weight_goal" ng-change="goalUpdated()"/>
+                <small>(tmp) bound goal @todo make directive and save</small>
             </p>
         </div>
     </div>
@@ -34,7 +35,7 @@
         </div>
         <div class="panel-body">
 
-            <button class="btn btn-primary btn-lg pull-right"><i class="fa fa-plus"></i> Add Log</button>
+            <button class="btn btn-primary btn-lg pull-right" ng-click="promptAddLog()"><i class="fa fa-plus"></i> Add Log</button>
             
             <table class="table table-striped table-hover">
                 
@@ -52,8 +53,8 @@
                         <td>{{log.weight}}</td>
                         <td>
                             <span class="buttons pull-right">
-                                <button class="btn btn-info"><i class="fa fa-pencil"></i></button>
-                                <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                <button class="btn btn-info" ng-click="promptEditLog(log)"><i class="fa fa-pencil"></i></button>
+                                <button class="btn btn-danger" ng-click="promptDeleteLog(log)"><i class="fa fa-trash"></i></button>
                             </span>
                         </td>
                     </tr>

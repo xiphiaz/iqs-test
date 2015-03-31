@@ -45,9 +45,17 @@ angular.module('weightLossService', [])
 
                     var weightLogs = res.data.weight_logs;
 
-                    weightLogs = _.sortBy(weightLogs, function(weightLog){
-                        return new Date(weightLog.date).valueOf();
-                    }).reverse();
+                    weightLogs = _.chain(weightLogs)
+                        .map(function(log){
+                            log.weight = Number(log.weight); //@todo typecast in API
+                            return log;
+                        })
+                        .sortBy(function(weightLog){
+                            return new Date(weightLog.date).valueOf();
+                        })
+                        .value()
+                        .reverse()
+                    ;
 
                     return weightLogs; //@todo unwrap response in api
                 }).catch(function(err){

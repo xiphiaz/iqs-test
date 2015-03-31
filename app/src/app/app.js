@@ -5,7 +5,10 @@ angular.module('app', [
     'stateManager'
 ])
     .constant('API_URL', '/api')
-    .config(function(){
+    .config(function(showErrorsConfigProvider){
+
+
+        showErrorsConfigProvider.showSuccess(true);
 
     })
 

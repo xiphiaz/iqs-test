@@ -1,4 +1,6 @@
-angular.module('app.public.weightloss', [])
+angular.module('app.public.weightloss', [
+    'app.public.weightloss.addEditLogModal'
+])
 
 
     .config(function(stateHelperServiceProvider) {
@@ -28,7 +30,7 @@ angular.module('app.public.weightloss', [])
         });
     })
 
-    .controller('app.public.weightloss.controller', function($scope, currentGoal, allLogs, user) {
+    .controller('app.public.weightloss.controller', function($scope, currentGoal, allLogs, user, $modal) {
 
         $scope.user = user;
         $scope.currentGoal = currentGoal;
@@ -83,6 +85,53 @@ angular.module('app.public.weightloss', [])
 
 
 
+        $scope.promptAddLog = function(){
+
+            return $modal.open({
+
+                templateUrl: 'templates/app/public/weightloss/addEditLogModal/addEditModal.tpl.html',
+                controller: 'app.public.weightloss.addEditLogModal.controller',
+                size: 'md',
+                resolve: {
+                    mode: function(){
+                        return 'add';
+                    },
+                    log: function(){
+                        return {}; //new log
+                    }
+                }
+
+            }).result.then(function(newLog){
+                $scope.allLogs.unshift(newLog);
+            });
+
+        };
+
+        $scope.promptEditLog = function(log){
+
+            return $modal.open({
+
+                templateUrl: 'templates/app/public/weightloss/addEditLogModal/addEditModal.tpl.html',
+                controller: 'app.public.weightloss.addEditLogModal.controller',
+                size: 'md',
+                resolve: {
+                    mode: function(){
+                        return 'edit';
+                    },
+                    log: function(){
+                        return _.clone(log); //new log
+                    }
+                }
+
+            }).result.then(function(editedLog){
+
+            });
+
+        };
+
+        $scope.promptDeleteLog = function(log){
+
+        };
 
 
         $scope.chartConfig = {
@@ -129,7 +178,7 @@ angular.module('app.public.weightloss', [])
 
             var chartData = _.reduce(_.clone($scope.allLogs).reverse(), function(result, log, key){
 
-                result.push([new Date(log.date).valueOf(), Number(log.weight)]);
+                result.push([new Date(log.date).valueOf(), log.weight]);
 
                 return result;
             }, []);
