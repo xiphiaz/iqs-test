@@ -5,6 +5,23 @@
         <h1>Weightloss App</h1>
     </div>
 
+    <div class="row">
+        <span class="pull-right text-info">
+            Logged in as {{user.first_name}} {{user.last_name}}
+        </span>
+    </div>
+
+    <div class="row panel panel-default">
+        <div class="panel-heading">
+            <h2>Your Goal</h2>
+        </div>
+        <div class="panel-body">
+
+            Your current goal weight is <span class="text-info">{{currentGoal.weight_goal}} kg</span>. You are <span ng-if="relativeGoalInfo.value !== 0" class="text-info">{{relativeGoalInfo.value}} kg</span> {{relativeGoalInfo.phrase}} your target weight
+
+        </div>
+    </div>
+
     <pre>{{user|json}}</pre>
 
     <pre>{{currentGoal|json}}</pre>

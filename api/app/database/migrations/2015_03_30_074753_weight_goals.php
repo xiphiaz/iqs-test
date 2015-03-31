@@ -20,7 +20,7 @@ class WeightGoals extends Migration {
 
                 $table->char('weight_goal_id', 36);
                 $table->char('user_id', 36);
-                $table->float('weight_goal');
+                $table->float('weight_goal', 3, 1);
 
                 $table->dateTime('created_at');
                 $table->dateTime('updated_at');

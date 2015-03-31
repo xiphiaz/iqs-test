@@ -21,7 +21,7 @@ class WeightLogs extends Migration {
                 $table->char('weight_log_id', 36);
                 $table->char('user_id', 36);
 
-                $table->float('weight');
+                $table->float('weight', 3, 1);
 
                 $table->date('date');
 

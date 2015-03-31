@@ -1,6 +1,6 @@
-angular.module('userService', [])
+angular.module('weightLossService', [])
     .constant('USER_ID', '0b13e52d-b058-32fb-8507-10dec634a07c') //@todo temporary!
-    .factory('userService', function (apiService, USER_ID) {
+    .factory('weightLossService', function (apiService, USER_ID) {
 
 
         // Private methods, namespaced for code clarity
@@ -20,26 +20,31 @@ angular.module('userService', [])
             },
 
             /**
-             * Retrieve all users
+             * Get user's goal
              * @returns {*}
              */
-            getAllUsers: function(){
-
-                return apiService.get('/users').then(function(res){
-                    return res.data; //@todo unwrap response in api
+            getGoal: function(){
+                return apiService.get('/users/'+this._userId+'/goal').then(function(res){
+                    return res.data.data; //@todo unwrap response in api
                 }).catch(function(err){
                     console.error(err);
                 });
-
             },
 
             /**
-             * Get one user (the current one)
+             * Get all user's logs
              * @returns {*}
              */
-            getUser: function(){
-                return apiService.get('/users/'+this._userId).then(function(res){
-                    return res.data.data; //@todo unwrap response in api
+            getLogs: function(){
+                return apiService.get('/users/'+this._userId+'/logs').then(function(res){
+
+                    var weightLogs = res.data.weight_logs;
+
+                    weightLogs = _.sortBy(weightLogs, function(weightLog){
+                        return moment(weightLog.date);
+                    });
+
+                    return weightLogs; //@todo unwrap response in api
                 }).catch(function(err){
                     console.error(err);
                 });
@@ -52,19 +57,19 @@ angular.module('userService', [])
             return {
 
                 /**
-                 * Get all users
+                 * Get users goal
                  * @returns {*}
                  */
-                getAllUsers: function(){
-                    return privateMethods.getAllUsers();
+                getGoal: function(){
+                    return privateMethods.setUser().getGoal();
                 },
 
                 /**
-                 * Get current user
+                 * Get all user's logs
                  * @returns {*}
                  */
-                getUser: function(){
-                    return privateMethods.setUser().getUser();
+                getLogs: function(){
+                    return privateMethods.setUser().getLogs();
                 }
 
             };
