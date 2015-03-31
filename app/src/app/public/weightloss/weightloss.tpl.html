@@ -1,4 +1,4 @@
-<div class="home container">
+<div class="home container" id="weightloss-app">
 
     <div class="jumbotron row">
         <h2 class="pull-right">Incomplete <i class="fa fa-thumbs-o-down"></i></h2>
@@ -17,7 +17,47 @@
         </div>
         <div class="panel-body">
 
-            Your current goal weight is <span class="text-info">{{currentGoal.weight_goal}} kg</span>. You are <span ng-if="relativeGoalInfo.value !== 0" class="text-info">{{relativeGoalInfo.value}} kg</span> {{relativeGoalInfo.phrase}} your target weight
+            <p>Your current goal weight is
+                <span class="text-info">{{currentGoal.weight_goal}} kg</span>.
+                At <span class="text-info">{{relativeGoalInfo.current}} kgs</span>, you are
+                <span class="text-{{relativeGoalInfo.colour}}">{{relativeGoalInfo.phrase}}</span> your target weight</p>
+
+            <p>
+                <input type="number" ng-model="currentGoal.weight_goal" ng-change="goalUpdated()"/>
+            </p>
+        </div>
+    </div>
+
+    <div class="row panel panel-default">
+        <div class="panel-heading">
+            <h2>Previous logs</h2>
+        </div>
+        <div class="panel-body">
+            
+            <table class="table table-striped table-hover">
+                
+                <thead>
+                    <tr>
+                        <td>Date</td>
+                        <th>Weight</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <tr ng-repeat="log in allLogs">
+                        <td>{{log.date | date:'mediumDate'}}</td>
+                        <td>{{log.weight}}</td>
+                        <td>
+                            <span class="buttons pull-right">
+                                <button class="btn btn-info"><i class="fa fa-pencil"></i></button>
+                                <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+                
+            </table>
 
         </div>
     </div>

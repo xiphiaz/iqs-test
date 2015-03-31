@@ -35,26 +35,51 @@ angular.module('app.public.weightloss', [])
         $scope.allLogs = allLogs;
 
 
-        $scope.relativeGoalInfo = {};
+        $scope.relativeGoalInfo = {
+            value: 0,
+            phrase: '',
+            colour: 'default'
+        };
 
         var reloadGoalPhrase = function(){
 
-            var goal = Number($scope.currentGoal.weight_goal);
-            var latestLog = Number(_.last($scope.allLogs).weight);
+            var goal = Number($scope.currentGoal.weight_goal),
+                latestLog = Number(_.last($scope.allLogs).weight),
+                absValue = Math.abs(goal - latestLog).toFixed(1),
+                successRange = 2,
+                phrase, colour
+            ;
 
-            $scope.relativeGoalInfo.value = Math.abs(goal - latestLog).toFixed(1);
-
-            if (goal < latestLog){
-                $scope.relativeGoalInfo.phrase = 'over';
-            }else if (latestLog > goal){
-                $scope.relativeGoalInfo.phrase = 'under';
-            }else{
-                $scope.relativeGoalInfo.phrase = 'on';
+            if (absValue === 0){
+                phrase = 'at';
+                colour = 'success';
+            }else if (absValue < successRange){
+                phrase = 'within '+successRange+' kgs of';
+                colour = 'success';
+            }else if (goal < latestLog){
+                phrase = 'over';
+                colour = 'danger';
+            }else if (goal > latestLog){
+                phrase = 'under';
+                colour = 'warning';
             }
+            
+            return {
+                current: latestLog,
+                value: absValue,
+                phrase: phrase,
+                colour: colour
+            };
 
         };
 
-        reloadGoalPhrase();
+        $scope.relativeGoalInfo = reloadGoalPhrase(); //init
+
+        $scope.goalUpdated = function(){
+            $scope.relativeGoalInfo = reloadGoalPhrase();
+        };
+
+
 
     })
 

@@ -25,7 +25,12 @@ angular.module('weightLossService', [])
              */
             getGoal: function(){
                 return apiService.get('/users/'+this._userId+'/goal').then(function(res){
-                    return res.data.data; //@todo unwrap response in api
+
+                    var goal = res.data.data; //@todo unwrap response in api
+
+                    goal.weight_goal = Number(goal.weight_goal); //cast to number @todo make sure the API typecasts
+
+                    return goal;
                 }).catch(function(err){
                     console.error(err);
                 });
