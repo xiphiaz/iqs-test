@@ -30,22 +30,24 @@
 
     <div class="row panel panel-default">
         <div class="panel-heading">
-            <h2>Previous logs</h2>
+            <h2>Your logs</h2>
         </div>
         <div class="panel-body">
+
+            <button class="btn btn-primary btn-lg pull-right"><i class="fa fa-plus"></i> Add Log</button>
             
             <table class="table table-striped table-hover">
                 
                 <thead>
                     <tr>
-                        <td>Date</td>
-                        <th>Weight</th>
+                        <th>Date</th>
+                        <th>Weight (kg)</th>
                         <th></th>
                     </tr>
                 </thead>
                 
                 <tbody>
-                    <tr ng-repeat="log in allLogs">
+                    <tr ng-repeat="log in allLogs | limitTo:10">
                         <td>{{log.date | date:'mediumDate'}}</td>
                         <td>{{log.weight}}</td>
                         <td>
@@ -62,10 +64,15 @@
         </div>
     </div>
 
-    <pre>{{user|json}}</pre>
+    <div class="row panel panel-default">
+        <div class="panel-heading">
+            <h2>Graph</h2>
+        </div>
+        <div class="panel-body">
 
-    <pre>{{currentGoal|json}}</pre>
+            <highchart id="weightGraph" config="chartConfig"></highchart>
 
-    <pre>{{allLogs|json}}</pre>
+        </div>
+    </div>
 
 </div>

@@ -44,7 +44,7 @@ angular.module('app.public.weightloss', [])
         var reloadGoalPhrase = function(){
 
             var goal = Number($scope.currentGoal.weight_goal),
-                latestLog = Number(_.last($scope.allLogs).weight),
+                latestLog = Number(_.first($scope.allLogs).weight),
                 absValue = Math.abs(goal - latestLog).toFixed(1),
                 successRange = 2,
                 phrase, colour
@@ -77,7 +77,86 @@ angular.module('app.public.weightloss', [])
 
         $scope.goalUpdated = function(){
             $scope.relativeGoalInfo = reloadGoalPhrase();
+
+            $scope.updateGraph(); //move goal band
         };
+
+
+
+
+
+        $scope.chartConfig = {
+
+            options: {
+                chart: {
+                    type: 'spline'
+                },
+                tooltip: {
+                    style: {
+                        padding: 10,
+                        fontWeight: 'bold'
+                    }
+                },
+                plotOptions: {
+                    series: {
+                        marker: {
+                            enabled: true,
+                            symbol: 'circle'
+                        }
+                    }
+                }
+
+            },
+
+            series: [],
+            title: {
+                text: 'Weight over time'
+            },
+            loading: false,
+            xAxis: {
+                title: {text: 'Date'},
+                type: 'datetime'
+            },
+            yAxis: {
+                title: {
+                    text: 'Weight (kg)'
+                }
+            }
+        };
+
+
+        $scope.updateGraph = function(){
+
+            var chartData = _.reduce(_.clone($scope.allLogs).reverse(), function(result, log, key){
+
+                result.push([new Date(log.date).valueOf(), Number(log.weight)]);
+
+                return result;
+            }, []);
+
+            $scope.chartConfig.series = [
+                {
+                    name: "Weight Logged",
+                    color: '#5bc0de',
+                    data: chartData
+                },
+                {
+                    name: 'Goal line',
+                    dashStyle: 'dot',
+                    color: 'white',
+                    data: [_.last(chartData), [ new Date().valueOf(), $scope.currentGoal.weight_goal ] ]
+                }
+            ];
+
+            $scope.chartConfig.yAxis.plotBands =  [{
+                color: '#5cb85c', // Color value
+                from: Number($scope.currentGoal.weight_goal) - 1, // Start of the plot band
+                to: Number($scope.currentGoal.weight_goal) + 1 // End of the plot band
+            }];
+
+        };
+
+        $scope.updateGraph(); //init
 
 
 

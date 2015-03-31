@@ -8,5 +8,6 @@ angular.module('vendorModules', [
     'ui.bootstrap.showErrors', //handle the has-error etc classes correctly
     'ui.validate', //Module to add custom validation to inputs
     'ngAnimate', //angular animate
-    'ngSanitize' //angular sanitise
+    'ngSanitize', //angular sanitise,
+    'highcharts-ng' //https://github.com/pablojim/highcharts-ng,
 ]);

@@ -70,7 +70,7 @@ class UserStorySeeder extends Seeder {
             'weight_log_id' => $faker->uuid,
             'user_id' => $userId,
             'date' => $dateTime,
-            'weight' => $faker->randomFloat(1, $goalWeight-2, $goalWeight+20)
+            'weight' => $faker->randomFloat(1, $goalWeight, $goalWeight+15)
         ]);
 
         $user->timestamps = true;
